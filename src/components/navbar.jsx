@@ -23,7 +23,7 @@ function Navbar({ isAuthor }) {
               Profile
             </NavLink>
           </li>
-          {isAuthor ? (
+          {isAuthor !== null || isAuthor ? (
             <li className="LiNavbar">
               <NavLink to="/logout" className="linkStyleNavbar">
                 logout
