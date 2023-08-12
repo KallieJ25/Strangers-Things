@@ -203,6 +203,14 @@ input[type="password"] {
   padding: 10px 20px;
 }
 
+.alertStyleBox {
+  width: 100%;
+  position: fixed;
+  align-content: center;
+  display: grid;
+  justify-content: center;
+}
+
 .danger-color-text {
   margin-top: 0px;
   color: var(--danger-alert);
@@ -215,6 +223,27 @@ input[type="password"] {
   color: green;
 }
 
-.sucess-div {
+.sucess-div,
+.danger-div {
   margin-bottom: 10px;
+  width: 364px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-radius: 10px;
+  position: relative;
+  top: -35px;
+  color: white;
+  flex-direction: row;
+  z-index: 1;
+}
+.sucess-div {
+  border: 1px solid #4ddb98;
+  background-color: #4ddb98;
+}
+
+.danger-div {
+  border: 1px solid #ec474f;
+  background-color: #ec474f;
 }

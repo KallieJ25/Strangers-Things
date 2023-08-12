@@ -10,6 +10,10 @@ import Navbar from "./components/Navbar";
 import "./App.css";
 
 function App() {
+  const COHORT_NAME = "2209-FTB-ET-WEB-FT";
+  const BASE_URL = `https://strangers-things.herokuapp.com/api/${COHORT_NAME}`;
+  const [token, setToken] = useState("");
+  const [isAuthor, setAuthor] = useState("");
   // Changing the background color of the page when the path is set to /register or /login.
   const location = useLocation();
   useEffect(() => {
@@ -21,16 +25,42 @@ function App() {
       document.body.classList.remove("background-register");
     }
   }, [location]);
+
+  useEffect(() => {
+    const myData = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/users/me`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const result = await response.json();
+        console.log("ID: ", result);
+        sessionStorage.setItem("isAuthor", result.data._id);
+        let Auth = sessionStorage.getItem("isAuthor");
+        setAuthor(Auth);
+        return result;
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    if (token) myData();
+    // console.log("TOKEN: ", token);
+  }, [token, BASE_URL]);
   return (
     <>
-      <Navbar />
+      <Navbar isAuthor={isAuthor} />
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/register" element={<Register />}></Route>
+        <Route
+          path="/register"
+          element={<Register setToken={setToken} />}
+        ></Route>
+        <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />}></Route>
         <Route path="/Posts" element={<Posts />}></Route>
         <Route path="/Profile" element={<Profile />}></Route>
-        <Route path="/logout" element={<Logout />}></Route>
       </Routes>
     </>
   );
