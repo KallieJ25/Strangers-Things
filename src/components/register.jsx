@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 function Register({ setToken }) {
