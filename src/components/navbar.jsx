@@ -1,6 +1,6 @@
 import { NavLink, Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ isAuthor }) {
   return (
     <>
       <div className="navbar">
@@ -23,21 +23,21 @@ function Navbar() {
               Profile
             </NavLink>
           </li>
-          <li className="LiNavbar">
-            <NavLink to="/logout" className="linkStyleNavbar">
-              logout
-            </NavLink>
-          </li>
-          <li className="LiNavbar">
-            <NavLink to="/login" className="linkStyleNavbar">
-              Login
-            </NavLink>
-          </li>
-          <li className="LiNavbar">
-            <NavLink to="/register" className="linkStyleNavbar">
-              register
-            </NavLink>
-          </li>
+          {isAuthor ? (
+            <li className="LiNavbar">
+              <NavLink to="/logout" className="linkStyleNavbar">
+                logout
+              </NavLink>
+            </li>
+          ) : (
+            <>
+              <li className="LiNavbar">
+                <NavLink to="/login" className="linkStyleNavbar">
+                  Login
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </>

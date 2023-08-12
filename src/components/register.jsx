@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
-function Register() {
+function Register({ setToken }) {
   const {
     register: registername,
     handleSubmit,
@@ -20,6 +20,7 @@ function Register() {
   const [username, setUsername] = useState("");
   const [passwordType, setPasswordType] = useState("");
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
   //password and rePassword validation
   const password = useRef({});
   password.current = watch("password", "");
@@ -59,19 +60,44 @@ function Register() {
         }),
       });
       const result = await response.json();
-      console.log(result);
-      setMessage(result.data.message);
+
+      if (result.success === false) {
+        setMessage(result.error.message);
+        setMessageType("danger-color-text danger-div");
+      } else {
+        setMessage(result.data.message);
+        setMessageType("success-alert-text sucess-div");
+        setToken(result.data.token);
+      }
       return result;
     } catch (err) {
       console.error(err);
     }
   };
+  //delete message after 5 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+        setMessageType("");
+      }, 5000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [message]);
   return (
     <>
+      <div className="alertStyleBox">
+        {message && (
+          <div className={messageType}>
+            <span>{message}</span>
+          </div>
+        )}
+      </div>
+
       <div className="container">
-        <div className="success-alert-text sucess-div">
-          <span>{message}</span>
-        </div>
         <div className="card">
           <div className="title">
             <h1 className="bold-text">Signup</h1>
@@ -177,8 +203,7 @@ function Register() {
                     type={showRePassword ? "text" : "password"}
                     {...registername("rePassword", {
                       validate: (value) =>
-                        value === password.current ||
-                        "The passwords do not match",
+                        value === passwordType || "The passwords do not match",
                     })}
                     id="rePassword"
                     placeholder="Confirm password"
