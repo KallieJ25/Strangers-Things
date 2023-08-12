@@ -1,42 +1,220 @@
+:root {
+  --body-background-color: #f5f5f5;
+  --navbar-background: #e5f1f9;
+  --primary-color-text: black;
+  --brand-Name-Color: #356adb;
+  --link-Style-Hover: #4a87e7;
+  --white-color: #ffffff;
+  --danger-alert: #ff0000;
+}
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+@font-face {
+  font-family: "UbuntuNerdFont-bold";
+  src: url("./components/UbuntuNerdFont-Medium.ttf") format("truetype");
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@font-face {
+  font-family: "UbuntuNerdFont-Light";
+  src: url("./components/UbuntuNerdFont-Light.ttf") format("truetype");
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.normal-text {
+  font-family: "UbuntuNerdFont-Light";
+}
+
+.bold-text {
+  font-family: "UbuntuNerdFont-bold";
+}
+
+body {
+  font-family: "UbuntuNerdFont-Light";
+  color: var(--primary-color-text);
+  overflow-x: hidden;
+  background-color: var(--body-background-color);
+}
+
+.background-register {
+  background-color: #deeafb;
+}
+
+/* Navbar style */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  /* background: var(--navbar-background); */
+  height: 57px;
+  padding-left: 40px;
+  position: absolute;
+  top: 0;
+  /* border-bottom: 1px solid var(--brand-Name-Color); */
+  left: 0px;
+  right: 0px;
+}
+
+.navbar-nav {
+  display: flex;
+  list-style-type: none;
+  padding-right: 40px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.brandName {
+  display: flex;
+  width: 100%;
+  font-size: 1.3rem;
+  font-family: "UbuntuNerdFont-bold";
+  color: var(--brand-Name-Color);
+  text-decoration: none;
+  width: 210px;
+}
+
+.LiNavbar {
+  width: 100px;
+  height: 57px;
+  width: 100px;
+  height: 57px;
+  display: flex;
+}
+
+.linkStyleNavbar {
+  color: var(--primary-color-text);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition-duration: 0.4s;
+}
+
+.linkStyle:hover {
+  color: var(--link-Style-Hover);
+}
+
+.active {
+  background-color: var(--brand-Name-Color);
+  color: var(--white-color);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* Register Components */
+
+.container {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .card {
-  padding: 2em;
+  padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: column;
+  min-width: 400px;
+  min-height: 448px;
+  width: 400px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048), 0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072), 0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
 }
 
-.read-the-docs {
-  color: #888;
+.title {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  height: 83px;
+}
+
+.container-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  height: 290px;
+}
+
+input[type="text"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="password"] {
+  width: 82%;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.loginButton {
+  height: 50px;
+  background-color: var(--brand-Name-Color);
+  color: var(--white-color);
+  border: 1px solid var(--brand-Name-Color);
+  border-radius: 5px;
+  transition-duration: 0.4s;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.loginButton:hover {
+  background-color: var(--link-Style-Hover);
+  cursor: pointer;
+}
+
+.linkStyle {
+  text-decoration: none;
+  color: #2279a7;
+  transition-duration: 0.4s;
+}
+
+.linkStyle:hover {
+  text-decoration: underline;
+}
+
+.centerText {
+  display: flex;
+  justify-content: center;
+}
+
+.passwordSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.buttonPassword {
+  padding: 10px 20px;
+}
+
+.danger-color-text {
+  margin-top: 0px;
+  color: var(--danger-alert);
+  display: flex;
+  align-items: center;
+  margin-bottom: 0px;
+}
+
+.success-alert-text {
+  color: green;
+}
+
+.sucess-div {
+  margin-bottom: 10px;
 }
