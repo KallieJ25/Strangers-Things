@@ -12,12 +12,23 @@ import "./App.css";
 function App() {
   const COHORT_NAME = "2209-FTB-ET-WEB-FT";
   const BASE_URL = `https://strangers-things.herokuapp.com/api/${COHORT_NAME}`;
-  const [token, setToken] = useState("");
   const navigate = useNavigate();
   // Changing the background color of the page when the path is set to /register or /login.
   const location = useLocation();
   const isRegisterPage = location.pathname === "/register";
   const isLoginPage = location.pathname === "/login";
+  const [token, setToken] = useState("");
+  //storage the token in a localStorage
+  if (token) {
+    localStorage.setItem("token", token);
+  } else {
+    localStorage.removeItem("token");
+  }
+
+  let TokenItem = localStorage.getItem("token");
+  const [authenticated, setAuthenticated] = useState(false);
+
+  //changing the background when the URL PATH is /register and /login
   useEffect(() => {
     if (isRegisterPage || isLoginPage) {
       document.body.classList.add("background-register");
@@ -32,47 +43,55 @@ function App() {
         const response = await fetch(`${BASE_URL}/users/me`, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${TokenItem}`,
           },
         });
         const result = await response.json();
-        //if the user is authenticated
-        if (result.success === true) {
-          //creating the sessionStorage isAuthor with the user id
-          sessionStorage.setItem("isAuthor", result.data._id);
-          //if the user if is different to null
-          if (result.data._id !== null || result.data._id !== "null") {
-            //checking the path /register and redirect to /profile page after 1 second
-            if (isRegisterPage) {
-              const timer = setTimeout(() => {
-                navigate("/profile");
-              }, 1000);
-              timer();
-            }
+        //set TokenItem true if different than (null,empty and false)
+        setAuthenticated(
+          TokenItem !== null || TokenItem !== "" || TokenItem !== false
+        );
+
+        //check for authenticated be true
+        if (authenticated) {
+          //if the URL path is /register
+          if (isRegisterPage) {
+            const timer = setTimeout(() => {
+              navigate("/profile");
+            }, 1000);
+            return () => {
+              clearTimeout(timer);
+            };
           }
+        } else {
+          navigate("/login");
         }
         return result;
       } catch (err) {
         console.error(err);
       }
     };
-    if (token) myData();
-  }, [token, BASE_URL, navigate, isRegisterPage]);
-
-  const isAuthor = sessionStorage.getItem("isAuthor");
+    TokenItem ? myData() : "";
+  }, [TokenItem, BASE_URL, navigate, isRegisterPage, authenticated]);
   return (
     <>
-      <Navbar isAuthor={isAuthor} />
+      <Navbar authenticated={authenticated} />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route
           path="/register"
           element={<Register setToken={setToken} />}
         ></Route>
-        <Route path="/logout" element={<Logout />} />
+        <Route
+          path="/logout"
+          element={<Logout setAuthenticated={setAuthenticated} />}
+        />
         <Route path="/login" element={<Login />}></Route>
         <Route path="/Posts" element={<Posts />}></Route>
-        <Route path="/Profile" element={<Profile />}></Route>
+        <Route
+          path="/Profile"
+          element={<Profile authenticated={authenticated} />}
+        ></Route>
       </Routes>
     </>
   );
