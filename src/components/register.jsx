@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 function Register({ setToken }) {
@@ -60,7 +60,7 @@ function Register({ setToken }) {
         }),
       });
       const result = await response.json();
-
+      //handle the message
       if (result.success === false) {
         setMessage(result.error.message);
         setMessageType("danger-color-text danger-div");

@@ -1,6 +1,12 @@
 import { NavLink, Link } from "react-router-dom";
 
-function Navbar({ isAuthor }) {
+function Navbar({ authenticated }) {
+  function handleLogOut() {
+    if (authenticated !== true || authenticated === "") {
+      authenticated = false;
+    }
+  }
+  console.log(authenticated);
   return (
     <>
       <div className="navbar">
@@ -18,17 +24,28 @@ function Navbar({ isAuthor }) {
               Posts
             </NavLink>
           </li>
-          <li className="LiNavbar">
-            <NavLink to="/Profile" className="linkStyleNavbar">
-              Profile
-            </NavLink>
-          </li>
-          {isAuthor !== null || isAuthor ? (
-            <li className="LiNavbar">
-              <NavLink to="/logout" className="linkStyleNavbar">
-                logout
-              </NavLink>
-            </li>
+          {authenticated !== null &&
+          authenticated !== "" &&
+          authenticated !== false &&
+          authenticated ? (
+            <>
+              <li className="LiNavbar">
+                <NavLink to="/Profile" className="linkStyleNavbar">
+                  Profile
+                </NavLink>
+              </li>
+              <li className="LiNavbar">
+                <NavLink
+                  to="/logout"
+                  onClick={() => {
+                    handleLogOut();
+                  }}
+                  className="linkStyleNavbar"
+                >
+                  logout
+                </NavLink>
+              </li>
+            </>
           ) : (
             <>
               <li className="LiNavbar">
