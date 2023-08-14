@@ -1,4 +1,4 @@
-function Posts() {
+function Posts({ authenticated }) {
   return (
     <>
       <h1>Posts</h1>

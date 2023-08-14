@@ -200,7 +200,7 @@ input[type="password"] {
 }
 
 .buttonPassword {
-  padding: 10px 20px;
+  padding: 8px 20px;
 }
 
 .alertStyleBox {
@@ -226,7 +226,6 @@ input[type="password"] {
 .sucess-div,
 .danger-div {
   margin-bottom: 10px;
-  width: 364px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -239,11 +238,13 @@ input[type="password"] {
   z-index: 1;
 }
 .sucess-div {
+  width: 364px;
   border: 1px solid #4ddb98;
   background-color: #4ddb98;
 }
 
 .danger-div {
+  width: 400px;
   border: 1px solid #ec474f;
   background-color: #ec474f;
 }
