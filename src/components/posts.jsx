@@ -53,12 +53,14 @@ function Posts() {
        ))}
       </ul>
     </div>
-
+{/* 
     {showPopup && selectedPost && (
       <PostDetails selectedPost={selectedPost} onClick={closePopup} />
       
       
-      )}
+      )} */}
+
+      console.log(hello);
      </div>
    );
 }
