@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Register from "./components/register";
-import Login from "./components/Login";
+import Login from "./components/login";
 import Posts from "./components/posts";
 import Profile from "./components/profile";
 import Logout from "./components/logout";
@@ -55,7 +55,7 @@ function App() {
         //check for authenticated be true
         if (authenticated) {
           //if the URL path is /register
-          if (isRegisterPage) {
+          if (isRegisterPage || isLoginPage) {
             const timer = setTimeout(() => {
               navigate("/profile");
             }, 1000);
@@ -72,7 +72,14 @@ function App() {
       }
     };
     TokenItem ? myData() : "";
-  }, [TokenItem, BASE_URL, navigate, isRegisterPage, authenticated]);
+  }, [
+    TokenItem,
+    BASE_URL,
+    navigate,
+    isRegisterPage,
+    isLoginPage,
+    authenticated,
+  ]);
   return (
     <>
       <Navbar authenticated={authenticated} />
@@ -86,8 +93,11 @@ function App() {
           path="/logout"
           element={<Logout setAuthenticated={setAuthenticated} />}
         />
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/Posts" element={<Posts />}></Route>
+        <Route path="/login" element={<Login setToken={setToken} />}></Route>
+        <Route
+          path="/Posts"
+          element={<Posts authenticated={authenticated} />}
+        ></Route>
         <Route
           path="/Profile"
           element={<Profile authenticated={authenticated} />}
