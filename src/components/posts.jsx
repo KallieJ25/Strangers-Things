@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import PostDetails from "./postdetails.jsx";
 
@@ -59,10 +60,5 @@ function Posts() {
         </ul>
       </div>
     </div>
-  );
-}
-          
-
-
         
 export default Posts;
