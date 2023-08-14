@@ -248,3 +248,30 @@ input[type="password"] {
   border: 1px solid #ec474f;
   background-color: #ec474f;
 }
+
+
+.Post-web{
+  display: flex;
+  flex-direction:column;
+ 
+
+}
+.Post-tittle {
+
+  margin-top:5rem;
+   text-align:center;
+}
+
+.Content{
+  background-color: #356ADB;
+  box-shadow: 24px 18px 36px 10px rgba(0,0,0,0.61);
+  -webkit-box-shadow: 24px 18px 36px 10px rgba(0,0,0,0.61);
+  -moz-box-shadow: 24px 18px 36px 10px rgba(0,0,0,0.61);
+  height: 200px;
+  width: 50%;
+  display: block;
+}
+
+.Content:hover {
+  opacity: 0.5;
+}
