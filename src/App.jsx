@@ -6,8 +6,9 @@ import Posts from "./components/posts";
 import Profile from "./components/profile";
 import Logout from "./components/logout";
 import Home from "./components/home";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar";
 import "./App.css";
+import CreatePostForm from "./components/CreateFormPost";
 
 function App() {
   const COHORT_NAME = "2209-FTB-ET-WEB-FT";
@@ -103,8 +104,10 @@ function App() {
           element={<Profile authenticated={authenticated} />}
         ></Route>
       </Routes>
-    </>
+   
+    <CreatePostForm/> </>
   );
+
 }
 
 export default App;
