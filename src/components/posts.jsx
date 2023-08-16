@@ -60,13 +60,13 @@ function Posts({ authenticated, token, userId }) {
               } else if (
                 post.author.username
                   .toLowerCase()
-                  .includes(searchInput.toLocaleLowerCase()) ||
+                  .includes(searchInput.toLowerCase()) ||
                 post.title
                   .toLowerCase()
-                  .includes(searchInput.toLocaleLowerCase()) ||
+                  .includes(searchInput.toLowerCase()) ||
                 post.description
                   .toLowerCase()
-                  .includes(searchInput.toLocaleLowerCase())
+                  .includes(searchInput.toLowerCase())
               ) {
                 return post;
               }
