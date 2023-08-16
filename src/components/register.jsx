@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
-function Register({ setToken }) {
+function Register() {
   const {
     register: registername,
     handleSubmit,
@@ -67,7 +67,7 @@ function Register({ setToken }) {
       } else {
         setMessage(result.data.message);
         setMessageType("success-alert-text sucess-div");
-        setToken(result.data.token);
+        document.getElementById("form-register").reset();
       }
       return result;
     } catch (err) {
@@ -107,6 +107,7 @@ function Register({ setToken }) {
               onSubmit={handleSubmit(() => {
                 registerUser();
               })}
+              id="form-register"
             >
               <input
                 type="text"
