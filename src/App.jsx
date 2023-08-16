@@ -6,7 +6,7 @@ import Posts from "./components/posts";
 import Profile from "./components/profile";
 import Logout from "./components/logout";
 import Home from "./components/home";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/navbar";
 import "./App.css";
 
 function App() {
@@ -18,11 +18,10 @@ function App() {
   const isRegisterPage = location.pathname === "/register";
   const isLoginPage = location.pathname === "/login";
   const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
   //storage the token in a localStorage
   if (token) {
     localStorage.setItem("token", token);
-  } else {
-    localStorage.removeItem("token");
   }
 
   let TokenItem = localStorage.getItem("token");
@@ -49,22 +48,16 @@ function App() {
         const result = await response.json();
         //set TokenItem true if different than (null,empty and false)
         setAuthenticated(
-          TokenItem !== null || TokenItem !== "" || TokenItem !== false
+          TokenItem !== null && TokenItem !== "" && TokenItem !== false
         );
-
-        //check for authenticated be true
+        // //check for authenticated be true
         if (authenticated) {
-          //if the URL path is /register
-          if (isRegisterPage || isLoginPage) {
-            const timer = setTimeout(() => {
-              navigate("/profile");
-            }, 1000);
-            return () => {
-              clearTimeout(timer);
-            };
-          }
+          setToken(TokenItem);
+          setUserId(result.data._id);
         } else {
-          navigate("/login");
+          if (isRegisterPage || isLoginPage) {
+            navigate("/login");
+          }
         }
         return result;
       } catch (err) {
@@ -85,10 +78,7 @@ function App() {
       <Navbar authenticated={authenticated} />
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route
-          path="/register"
-          element={<Register setToken={setToken} />}
-        ></Route>
+        <Route path="/register" element={<Register />}></Route>
         <Route
           path="/logout"
           element={<Logout setAuthenticated={setAuthenticated} />}
@@ -96,7 +86,13 @@ function App() {
         <Route path="/login" element={<Login setToken={setToken} />}></Route>
         <Route
           path="/Posts"
-          element={<Posts authenticated={authenticated} />}
+          element={
+            <Posts
+              authenticated={authenticated}
+              token={token}
+              userId={userId}
+            />
+          }
         ></Route>
         <Route
           path="/Profile"
