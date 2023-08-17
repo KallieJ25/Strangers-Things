@@ -314,14 +314,14 @@ input[type="password"] {
 }
 
 .card-title {
-  width: 700px;
+  width: 800px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .card-price {
-  width: 300px;
+  width: 200px;
 }
 
 .titlePost {
@@ -414,4 +414,20 @@ input[type="password"] {
 .deletePost:hover {
   background-color: var(--danger-alert-hover);
   border-color: var(--danger-alert);
+}
+
+
+.Filter {
+    width:180px;
+    height:100px;
+  
+}
+
+.sortpost{
+  
+  display:block;
+}
+
+.sortpost label {
+    margin-right: 10px;
 }
