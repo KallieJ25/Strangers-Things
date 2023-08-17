@@ -6,7 +6,6 @@ function Navbar({ authenticated }) {
       authenticated = false;
     }
   }
-  console.log(authenticated);
   return (
     <>
       <div className="navbar">

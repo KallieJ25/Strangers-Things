@@ -261,7 +261,8 @@ input[type="password"] {
   text-align: center;
 }
 
-.Content {
+.Content,
+.contentMessage {
   background-color: white;
   width: 1000px;
   margin: 5px;
@@ -272,6 +273,13 @@ input[type="password"] {
   justify-content: center;
   border: 1px solid white;
   transition-duration: 0.4s;
+}
+
+.contentMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .Content:hover {
@@ -391,6 +399,7 @@ input[type="password"] {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
 }
 
 .editPost {
@@ -416,18 +425,73 @@ input[type="password"] {
   border-color: var(--danger-alert);
 }
 
-
-.Filter {
-    width:180px;
-    height:100px;
-  
-}
-
-.sortpost{
-  
-  display:block;
+.sortpost {
+  display: block;
 }
 
 .sortpost label {
-    margin-right: 10px;
+  margin-right: 10px;
+}
+
+.Filter {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.container-Filter {
+  width: 1000px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.sendMessage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-Error-Post,
+.container-center {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+}
+
+.errorPost {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.errorPost > h1 {
+  color: black;
+  font-size: 2.5rem;
+  margin-bottom: 0px;
+}
+
+.alertMessage {
+  top: 84px;
+}
+
+.container-center {
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginNeedMessage {
+  width: 201px;
+}
+
+#welcomeToHomePage {
+  margin-bottom: 1px;
+}
+#userNameHomePage {
+  margin-top: 1px;
 }

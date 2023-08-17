@@ -7,6 +7,7 @@ import Profile from "./components/profile";
 import Logout from "./components/logout";
 import Home from "./components/home";
 import Navbar from "./components/navbar";
+import Message from "./components/message";
 import "./App.css";
 
 function App() {
@@ -19,13 +20,18 @@ function App() {
   const isLoginPage = location.pathname === "/login";
   const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
-  //storage the token in a localStorage
+  const [authenticated, setAuthenticated] = useState(false);
+  const [userName, setuserName] = useState("");
   if (token) {
     localStorage.setItem("token", token);
   }
 
-  let TokenItem = localStorage.getItem("token");
-  const [authenticated, setAuthenticated] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("token") !== "") {
+      let TokenItem = localStorage.getItem("token");
+      setToken(TokenItem);
+    }
+  }, [setToken, token]);
 
   //changing the background when the URL PATH is /register and /login
   useEffect(() => {
@@ -36,52 +42,52 @@ function App() {
     }
   }, [location, isRegisterPage, isLoginPage]);
 
+  // Remove the line that sets authenticated state
+
   useEffect(() => {
     const myData = async () => {
       try {
         const response = await fetch(`${BASE_URL}/users/me`, {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${TokenItem}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         const result = await response.json();
-        //set TokenItem true if different than (null,empty and false)
-        setAuthenticated(
-          TokenItem !== null && TokenItem !== "" && TokenItem !== false
-        );
-        // //check for authenticated be true
-        if (authenticated) {
-          setToken(TokenItem);
+
+        if (result.success) {
+          setAuthenticated(true);
           setUserId(result.data._id);
+          setuserName(result.data.username);
         } else {
           if (isRegisterPage || isLoginPage) {
             navigate("/login");
           }
+          setAuthenticated(false);
         }
+
         return result;
       } catch (err) {
         console.error(err);
       }
     };
-    TokenItem ? myData() : "";
-  }, [
-    TokenItem,
-    BASE_URL,
-    navigate,
-    isRegisterPage,
-    isLoginPage,
-    authenticated,
-  ]);
+    token ? myData() : "";
+  }, [token, BASE_URL, navigate, isRegisterPage, isLoginPage]);
+
   return (
     <>
       <Navbar authenticated={authenticated} />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route
+          path="/"
+          element={<Home authenticated={authenticated} userName={userName} />}
+        ></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route
           path="/logout"
-          element={<Logout setAuthenticated={setAuthenticated} />}
+          element={
+            <Logout setAuthenticated={setAuthenticated} setToken={setToken} />
+          }
         />
         <Route path="/login" element={<Login setToken={setToken} />}></Route>
         <Route
@@ -98,6 +104,7 @@ function App() {
           path="/Profile"
           element={<Profile authenticated={authenticated} />}
         ></Route>
+        <Route path="/message/:id" element={<Message token={token} />}></Route>
       </Routes>
     </>
   );

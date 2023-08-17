@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import DropDown from "./sortdropdown";
 import { useMemo } from "react";
-
+import { Link } from "react-router-dom";
 function Posts({ authenticated, token, userId }) {
   const [posts, setPosts] = useState([]);
   const [userToken, setUserToken] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [userIdLogin, setUserIdLogin] = useState("");
-  const [colorPrice, setColorPrice] = useState("");
-  const [ sortDirection, setSortDirection ] = useState('newest');
-
+  const [sortDirection, setSortDirection] = useState("newest");
 
   //calling the API
   const fetchPosts = async () => {
@@ -27,12 +25,12 @@ function Posts({ authenticated, token, userId }) {
       const data = await response.json();
       setPosts(data.data.posts);
       //sorting post by newest to old || oldest to newest
-      const sortedPost = data.data.posts.sort((a, b) => 
-      sortDirection === 'newest'
+      const sortedPost = data.data.posts.sort((a, b) =>
+        sortDirection === "newest"
           ? new Date(b.createdAt) - new Date(a.createdAt)
           : new Date(a.createdAt) - new Date(b.createdAt)
       );
-        setPosts(sortedPost)
+      setPosts(sortedPost);
     } catch (error) {
       console.error(error);
     }
@@ -48,8 +46,6 @@ function Posts({ authenticated, token, userId }) {
       setUserIdLogin(userId);
     }
   }, [authenticated, setUserIdLogin, setUserToken, token, userId]);
-
-
 
   return (
     <>
@@ -70,8 +66,13 @@ function Posts({ authenticated, token, userId }) {
       <div className="Post-web">
         <h1 className="Post-tittle">Posts</h1>
         <div className="Filter">
-          <DropDown sortedPost={sortDirection} setSortDirection={setSortDirection} />
-        </div> 
+          <div className="container-Filter">
+            <DropDown
+              sortedPost={sortDirection}
+              setSortDirection={setSortDirection}
+            />
+          </div>
+        </div>
         <div className="PostBox">
           {posts
             .filter((post) => {
@@ -81,9 +82,7 @@ function Posts({ authenticated, token, userId }) {
                 post.author.username
                   .toLowerCase()
                   .includes(searchInput.toLowerCase()) ||
-                post.title
-                  .toLowerCase()
-                  .includes(searchInput.toLowerCase()) ||
+                post.title.toLowerCase().includes(searchInput.toLowerCase()) ||
                 post.description
                   .toLowerCase()
                   .includes(searchInput.toLowerCase())
@@ -150,9 +149,26 @@ function Posts({ authenticated, token, userId }) {
                       </button>
                     </div>
                   ) : (
-                    <button className="sendMessageButton loginButton">
-                      Send message
-                    </button>
+                    <div className="buttons">
+                      {authenticated ? (
+                        <Link
+                          to={`/message/${post._id}`}
+                          className="sendMessageButton loginButton"
+                          id={"see-" + post._id}
+                          name="see"
+                        >
+                          Send message
+                        </Link>
+                      ) : (
+                        <Link
+                          to={`/login`}
+                          className="sendMessageButton loginButton loginNeedMessage"
+                          name="login"
+                        >
+                          Login to send a message
+                        </Link>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
