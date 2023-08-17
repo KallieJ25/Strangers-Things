@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import DropDown from "./sortdropdown";
+import { useMemo } from "react";
 
 function Posts({ authenticated, token, userId }) {
   const [posts, setPosts] = useState([]);
@@ -6,6 +8,10 @@ function Posts({ authenticated, token, userId }) {
   const [searchInput, setSearchInput] = useState("");
   const [userIdLogin, setUserIdLogin] = useState("");
   const [colorPrice, setColorPrice] = useState("");
+  const [ sortDirection, setSortDirection ] = useState('newest');
+
+
+  //calling the API
   const fetchPosts = async () => {
     try {
       const response = await fetch(
@@ -16,8 +22,17 @@ function Posts({ authenticated, token, userId }) {
           },
         }
       );
+
+      //Response
       const data = await response.json();
       setPosts(data.data.posts);
+      //sorting post by newest to old || oldest to newest
+      const sortedPost = data.data.posts.sort((a, b) => 
+      sortDirection === 'newest'
+          ? new Date(b.createdAt) - new Date(a.createdAt)
+          : new Date(a.createdAt) - new Date(b.createdAt)
+      );
+        setPosts(sortedPost)
     } catch (error) {
       console.error(error);
     }
@@ -25,7 +40,7 @@ function Posts({ authenticated, token, userId }) {
 
   useEffect(() => {
     fetchPosts();
-  });
+  }, [sortDirection]);
 
   useEffect(() => {
     if (authenticated) {
@@ -33,6 +48,8 @@ function Posts({ authenticated, token, userId }) {
       setUserIdLogin(userId);
     }
   }, [authenticated, setUserIdLogin, setUserToken, token, userId]);
+
+
 
   return (
     <>
@@ -52,6 +69,9 @@ function Posts({ authenticated, token, userId }) {
       </div>
       <div className="Post-web">
         <h1 className="Post-tittle">Posts</h1>
+        <div className="Filter">
+          <DropDown sortedPost={sortDirection} setSortDirection={setSortDirection} />
+        </div> 
         <div className="PostBox">
           {posts
             .filter((post) => {
