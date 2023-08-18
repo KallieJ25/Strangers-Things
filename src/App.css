@@ -1,11 +1,14 @@
 :root {
-  --body-background-color: #f5f5f5;
+  --body-background-color: #f0f6fe;
   --navbar-background: #e5f1f9;
   --primary-color-text: black;
   --brand-Name-Color: #356adb;
   --link-Style-Hover: #4a87e7;
   --white-color: #ffffff;
   --danger-alert: #ff0000;
+  --edit-button-color: #ffa500;
+  --edit-button-color-hover: #ffc71b;
+  --danger-alert-hover: #ff5757;
 }
 #root {
   width: 100%;
@@ -247,4 +250,248 @@ input[type="password"] {
   width: 400px;
   border: 1px solid #ec474f;
   background-color: #ec474f;
+}
+
+.Post-web {
+  display: flex;
+  flex-direction: column;
+}
+.Post-tittle {
+  margin-top: 5rem;
+  text-align: center;
+}
+
+.Content,
+.contentMessage {
+  background-color: white;
+  width: 1000px;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid white;
+  transition-duration: 0.4s;
+}
+
+.contentMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Content:hover {
+  border: 1px solid var(--brand-Name-Color);
+}
+
+.ContainerSearchBar {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  right: 50%;
+  transform: translate(50%);
+  top: 0px;
+}
+
+.seacrBarInput {
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#searchLabel {
+  margin-right: 5px;
+}
+
+.PostBox {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container-card-title {
+  margin-top: 0px;
+  min-height: 70px;
+  display: flex;
+  flex-direction: row;
+}
+
+.card-title {
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-price {
+  width: 200px;
+}
+
+.titlePost {
+  margin-top: 0px;
+  margin-bottom: 1px;
+  color: var(--brand-Name-Color);
+  overflow: scroll;
+  height: 67px;
+}
+
+.soldBy {
+  margin-top: 0px;
+}
+
+.Container-post-description {
+  height: 80px;
+}
+
+.card-price {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  color: black;
+  border-radius: 5px;
+}
+
+.postPrice {
+  font-size: 1.3rem;
+}
+
+.postDescription {
+  height: 100%;
+  text-overflow: ellipsis;
+  white-space: break-spaces;
+  max-width: 100%;
+  overflow: scroll;
+  max-height: 100px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.free-price {
+  color: var(--danger-alert);
+}
+
+.buttonsPost {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.buttonsPost:first-child > button {
+  margin-right: 20px;
+}
+
+.sendMessageButton,
+.editPost,
+.deletePost {
+  width: 125px;
+  height: 50px;
+  border: 1px solid var(--brand-Name-Color);
+  border-radius: 5px;
+  transition-duration: 0.4s;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.editPost {
+  background-color: var(--edit-button-color);
+  border: 1px solid var(--edit-button-color);
+  transition-duration: 0.4s;
+}
+
+.editPost:hover {
+  background-color: var(--edit-button-color-hover);
+  border-color: var(--edit-button-color);
+}
+
+.deletePost {
+  background-color: var(--danger-alert);
+  border: 1px solid var(--danger-alert);
+  transition-duration: 0.4s;
+  color: var(--white-color);
+}
+
+.deletePost:hover {
+  background-color: var(--danger-alert-hover);
+  border-color: var(--danger-alert);
+}
+
+.sortpost {
+  display: block;
+}
+
+.sortpost label {
+  margin-right: 10px;
+}
+
+.Filter {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.container-Filter {
+  width: 1000px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.sendMessage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-Error-Post,
+.container-center {
+  width: 100%;
+  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+}
+
+.errorPost {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.errorPost > h1 {
+  color: black;
+  font-size: 2.5rem;
+  margin-bottom: 0px;
+}
+
+.alertMessage {
+  top: 84px;
+}
+
+.container-center {
+  flex-direction: column;
+  align-items: center;
+}
+
+.loginNeedMessage {
+  width: 201px;
+}
+
+#welcomeToHomePage {
+  margin-bottom: 1px;
+}
+#userNameHomePage {
+  margin-top: 1px;
 }

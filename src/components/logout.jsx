@@ -1,15 +1,17 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Logout({ setAuthenticated }) {
+function Logout({ setAuthenticated, setToken }) {
   const navigate = useNavigate();
+
   useEffect(() => {
     localStorage.removeItem("token");
     setAuthenticated(false);
-    location.reload(navigate("/login"));
-  });
-
-  return <></>;
+    setToken("");
+    location.reload();
+    navigate("/");
+  }, [navigate, setAuthenticated, setToken]);
+  return <></>; // This component doesn't render anything
 }
 
 export default Logout;

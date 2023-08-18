@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 function Login({ setToken }) {
@@ -36,6 +36,7 @@ function Login({ setToken }) {
   const [messageType, setMessageType] = useState("");
   const COHORT_NAME = "2209-FTB-ET-WEB-FT";
   const BASE_URL = `https://strangers-things.herokuapp.com/api/${COHORT_NAME}`;
+  const navigate = useNavigate();
   const handleLogin = async () => {
     try {
       const response = await fetch(`${BASE_URL}/users/login`, {
@@ -57,6 +58,7 @@ function Login({ setToken }) {
         setMessage(data.data.message);
         setMessageType("success-alert-text sucess-div");
         setToken(data.data.token);
+        navigate("/posts");
       }
     } catch (error) {
       console.error("Login error:", error);
