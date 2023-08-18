@@ -104,8 +104,9 @@ function App() {
           element={<Profile authenticated={authenticated} />}
         ></Route>
       </Routes>
+      <CreatePostForm/> 
+   </>
    
-    <CreatePostForm/> </>
   );
 
 }
