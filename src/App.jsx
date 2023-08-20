@@ -8,8 +8,9 @@ import Logout from "./components/logout";
 import Home from "./components/home";
 import Navbar from "./components/navbar";
 import Message from "./components/message";
+import CreatePost from "./components/CreatePost";
 import "./App.css";
-import CreatePostForm from "./components/CreateFormPost";
+
 
 function App() {
   const COHORT_NAME = "2209-FTB-ET-WEB-FT";
@@ -106,8 +107,9 @@ function App() {
           element={<Profile authenticated={authenticated} />}
         ></Route>
         <Route path="/message/:id" element={<Message token={token} />}></Route>
+        <Route path="/createPost" element={<CreatePost authenticated={authenticated} />}> </Route>
       </Routes>
-      <CreatePostForm/> 
+      
    </>
    
   );

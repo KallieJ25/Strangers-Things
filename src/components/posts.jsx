@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import DropDown from "./sortdropdown";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import CreatePost from "./CreatePost";
+
 function Posts({ authenticated, token, userId }) {
   const [posts, setPosts] = useState([]);
   const [userToken, setUserToken] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [userIdLogin, setUserIdLogin] = useState("");
   const [sortDirection, setSortDirection] = useState("newest");
-
+const [createdPost, setCreatedPost] = useState(false);
   //calling the API
   const fetchPosts = async () => {
     try {
@@ -24,7 +26,7 @@ function Posts({ authenticated, token, userId }) {
       //Response
       const data = await response.json();
       setPosts(data.data.posts);
-      //sorting post by newest to old || oldest to newest
+      // sorting post by newest to old || oldest to newest
       const sortedPost = data.data.posts.sort((a, b) =>
         sortDirection === "newest"
           ? new Date(b.createdAt) - new Date(a.createdAt)
@@ -38,7 +40,7 @@ function Posts({ authenticated, token, userId }) {
 
   useEffect(() => {
     fetchPosts();
-  }, [sortDirection]);
+  }, [createdPost, sortDirection]);
 
   useEffect(() => {
     if (authenticated) {
@@ -47,8 +49,18 @@ function Posts({ authenticated, token, userId }) {
     }
   }, [authenticated, setUserIdLogin, setUserToken, token, userId]);
 
+
+  useEffect(() => {
+    if(createdPost){
+      fetchPosts();
+      setCreatedPost(false);
+    }
+  }, [createdPost]);
+
+
   return (
     <>
+      <CreatePost authenticated={authenticated} token={token} createdPost={createdPost} setCreatedPost= {setCreatedPost}/> 
       <div className="ContainerSearchBar">
         <div className="seacrBarInput">
           <label htmlFor="search" id="searchLabel">
@@ -73,6 +85,9 @@ function Posts({ authenticated, token, userId }) {
             />
           </div>
         </div>
+        <div>
+        
+        </div>
         <div className="PostBox">
           {posts
             .filter((post) => {
@@ -95,9 +110,13 @@ function Posts({ authenticated, token, userId }) {
                 <div className="container-card-title">
                   <div className="card-title">
                     <h2 className="titlePost">{post.title}</h2>
-                    <span className="soldBy">
-                      {"Sold By: " + post.author.username}
+                    <p className="soldBy">
+                      <span className="bold-text">
+                      Sold By:&nbsp;
                     </span>
+                    {post.author.username}
+                    </p>
+                    
                   </div>
                   <div className="card-price">
                     <span>Price: </span>
@@ -110,6 +129,11 @@ function Posts({ authenticated, token, userId }) {
                       {post.price}
                     </span>
                   </div>
+                </div>
+                <div>
+                  <p><span className="bold-text">Location:&nbsp;</span>{post.location}</p>
+                  <p> <span className="bold-text"> Will be deliver:&nbsp;</span>
+                     {post.willDeliver ? "Yes" : "No"}</p>
                 </div>
                 <div className="Container-post-description">
                   <p className="postDescription">{post.description}</p>
@@ -175,7 +199,6 @@ function Posts({ authenticated, token, userId }) {
             ))}
         </div>
       </div>
-      <CreatePostForm/> 
     </>
   );
 }
