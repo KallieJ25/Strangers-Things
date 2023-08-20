@@ -14,7 +14,7 @@ function CreatePost({authenticated, token, setCreatedPost}){
       const COHORT_NAME = "2209-FTB-ET-WEB-FT";
   const BASE_URL = `https://strangers-things.herokuapp.com/api/${COHORT_NAME}`;
       useEffect(()=>{
-if(authenticated){
+if(!authenticated){
         navigate("/");
     }
       }, [navigate]);

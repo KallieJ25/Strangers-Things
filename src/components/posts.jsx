@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import DropDown from "./sortdropdown";
-import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import CreatePost from "./CreatePost";
 
@@ -60,7 +59,11 @@ const [createdPost, setCreatedPost] = useState(false);
 
   return (
     <>
+    {authenticated ? (
       <CreatePost authenticated={authenticated} token={token} createdPost={createdPost} setCreatedPost= {setCreatedPost}/> 
+    ) : ('')
+    }
+      
       <div className="ContainerSearchBar">
         <div className="seacrBarInput">
           <label htmlFor="search" id="searchLabel">
