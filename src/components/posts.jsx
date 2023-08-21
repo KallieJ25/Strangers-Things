@@ -9,7 +9,10 @@ function Posts({ authenticated, token, userId }) {
   const [searchInput, setSearchInput] = useState("");
   const [userIdLogin, setUserIdLogin] = useState("");
   const [sortDirection, setSortDirection] = useState("newest");
-const [createdPost, setCreatedPost] = useState(false);
+  const [createdPost, setCreatedPost] = useState(false);
+  const [message,setMessage] = useState("");
+  const [messageType,setMessageType] = useState("");
+
   //calling the API
   const fetchPosts = async () => {
     try {
@@ -56,9 +59,58 @@ const [createdPost, setCreatedPost] = useState(false);
     }
   }, [createdPost]);
 
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+        setMessageType("");
+      }, 5000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [message]);
+
+
+  //deleting post component
+  const deletePost = async (postId) => {
+    try {
+      const response = await fetch(`https://strangers-things.herokuapp.com/api/2209-FTB-ET-WEB-FT/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type' : 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      }); 
+
+      if(response.ok){
+        setMessage("the Post was deleted successfully");
+        setMessageType("success-alert-text sucess-div");
+        
+                   
+      }
+      const updatedPosts = posts.map(post => post.id == postId ? {...post, isActive: false} : post);
+      setPosts(updatedPosts);
+      //refetch calling fetchPosts to update component.
+      fetchPosts();
+    } catch (error) {
+      console.error('there was a problem deleting the post', error)
+    }
+  };
+ 
+
 
   return (
     <>
+    <div className="alertStyleBox alertMessage">
+        {message && (
+          <div className={messageType}>
+            <span>{message}</span>
+          </div>
+        )}
+      </div>
+    
     {authenticated ? (
       <CreatePost authenticated={authenticated} token={token} createdPost={createdPost} setCreatedPost= {setCreatedPost}/> 
     ) : ('')
@@ -143,8 +195,9 @@ const [createdPost, setCreatedPost] = useState(false);
                 </div>
                 <div className="buttons">
                   {authenticated && post.author._id === userIdLogin ? (
+                    
                     <div className="buttonsPost">
-                      <button className="deletePost">
+                      <button className="deletePost" onClick={() => deletePost(post._id)}>
                         <svg
                           stroke="currentColor"
                           fill="currentColor"
