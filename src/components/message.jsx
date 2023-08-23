@@ -6,7 +6,7 @@ function Message({ token }) {
   const BASE_URL = `https://strangers-things.herokuapp.com/api/${COHORT_NAME}`;
   const { id } = useParams();
   const [post, setPost] = useState([]);
-  //   const navigate = useNavigate();
+    // const navigate = useNavigate();
   const [messageInfo, setMessageInfo] = useState("Post not found");
   const [message, setMessage] = useState("");
   const [messageApi, setMessageApi] = useState("");

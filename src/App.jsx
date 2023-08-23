@@ -10,6 +10,7 @@ import Navbar from "./components/navbar";
 import Message from "./components/message";
 import CreatePost from "./components/CreatePost";
 import "./App.css";
+import EditPost from "./components/EditPost";
 
 
 function App() {
@@ -108,6 +109,7 @@ function App() {
         ></Route>
         <Route path="/message/:id" element={<Message token={token} />}></Route>
         <Route path="/createPost" element={<CreatePost authenticated={authenticated} />}> </Route>
+        <Route path="/edit-post/:postId" element={<EditPost token={token}/>}/>
       </Routes>
       
    </>

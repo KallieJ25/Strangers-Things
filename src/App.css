@@ -9,6 +9,7 @@
   --edit-button-color: #ffa500;
   --edit-button-color-hover: #ffc71b;
   --danger-alert-hover: #ff5757;
+  --black-Color: black;
 }
 #root {
   width: 100%;
@@ -165,6 +166,11 @@ input[type="password"] {
   border-bottom-right-radius: 0px;
 }
 
+input::placeholder , textarea::placeholder{
+  color: var(--black-Color);
+  opacity: 1;
+}
+
 .loginButton {
   height: 50px;
   background-color: var(--brand-Name-Color);
@@ -275,7 +281,7 @@ input[type="password"] {
   transition-duration: 0.4s;
 }
 
-.contentMessage {
+.contentMessage, .editContainerForm {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -406,6 +412,8 @@ input[type="password"] {
   background-color: var(--edit-button-color);
   border: 1px solid var(--edit-button-color);
   transition-duration: 0.4s;
+  color: var(--white-color);
+  font-size: 0.8rem;
 }
 
 .editPost:hover {
