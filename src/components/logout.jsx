@@ -8,7 +8,7 @@ function Logout({ setAuthenticated, setToken }) {
     localStorage.removeItem("token");
     setAuthenticated(false);
     setToken("");
-    location.reload();
+    // location.reload();
     navigate("/");
   }, [navigate, setAuthenticated, setToken]);
   return <></>; // This component doesn't render anything
