@@ -119,7 +119,9 @@ function Register() {
                   },
                 })}
                 placeholder="Username"
-                onChange={(event) => setUsername(event.target.value)}
+                onChange={(event) =>
+                  setUsername(event.target.value.toLowerCase())
+                }
               />
               {errors.username && (
                 <p className="danger-color-text">

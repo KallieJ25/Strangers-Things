@@ -116,7 +116,7 @@ function Login({ setToken }) {
                       },
                     })}
                     id="password"
-                    placeholder="Create password"
+                    placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
