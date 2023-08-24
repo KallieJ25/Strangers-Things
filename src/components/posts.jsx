@@ -10,8 +10,8 @@ function Posts({ authenticated, token, userId }) {
   const [userIdLogin, setUserIdLogin] = useState("");
   const [sortDirection, setSortDirection] = useState("newest");
   const [createdPost, setCreatedPost] = useState(false);
-  const [message,setMessage] = useState("");
-  const [messageType,setMessageType] = useState("");
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
   const navigate = useNavigate();
 
   //calling the API
@@ -41,9 +41,6 @@ function Posts({ authenticated, token, userId }) {
     }
   };
 
- 
-
-
   useEffect(() => {
     fetchPosts();
   }, [createdPost, sortDirection]);
@@ -55,9 +52,8 @@ function Posts({ authenticated, token, userId }) {
     }
   }, [authenticated, setUserIdLogin, setUserToken, token, userId]);
 
-
   useEffect(() => {
-    if(createdPost){
+    if (createdPost) {
       fetchPosts();
       setCreatedPost(false);
     }
@@ -76,84 +72,83 @@ function Posts({ authenticated, token, userId }) {
     }
   }, [message]);
 
- 
-
   //deleting post component
   const deletePost = async (postId) => {
     try {
-      const response = await fetch(`https://strangers-things.herokuapp.com/api/2209-FTB-ET-WEB-FT/posts/${postId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type' : 'application/json',
-          'Authorization': `Bearer ${token}`
+      const response = await fetch(
+        `https://strangers-things.herokuapp.com/api/2209-FTB-ET-WEB-FT/posts/${postId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
-      }); 
+      );
 
-      if(response.ok){
+      if (response.ok) {
         setMessage("the Post was deleted successfully");
         setMessageType("success-alert-text sucess-div");
-        
-                   
       }
-      const updatedPosts = posts.map(post => post.id == postId ? {...post, isActive: false} : post);
+      const updatedPosts = posts.map((post) =>
+        post.id == postId ? { ...post, isActive: false } : post
+      );
       setPosts(updatedPosts);
       //refetch calling fetchPosts to update component.
       fetchPosts();
     } catch (error) {
-      console.error('there was a problem deleting the post', error)
+      console.error("there was a problem deleting the post", error);
     }
   };
- 
- 
-    
-
-  const handleEditClick = (post) => {
-    navigate(`/edit-post/${post._id}`);
-}
-
 
   return (
     <>
-    <div className="alertStyleBox alertMessage">
+      <div className="alertStyleBox alertMessage">
         {message && (
           <div className={messageType}>
             <span>{message}</span>
           </div>
         )}
       </div>
-    
-    {authenticated ? (
-      <CreatePost authenticated={authenticated} token={token} createdPost={createdPost} setCreatedPost= {setCreatedPost}/> 
-    ) : ('')
-    }
-      
-      <div className="ContainerSearchBar">
-        <div className="seacrBarInput">
-          <label htmlFor="search" id="searchLabel">
-            Search:
-          </label>
-          &nbsp;
-          <input
-            type="text"
-            name="search"
-            placeholder="owner, title or description"
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-        </div>
-      </div>
+
+      {authenticated ? (
+        <CreatePost
+          authenticated={authenticated}
+          token={token}
+          createdPost={createdPost}
+          setCreatedPost={setCreatedPost}
+        />
+      ) : (
+        ""
+      )}
       <div className="Post-web">
-        <h1 className="Post-tittle">Posts</h1>
-        <div className="Filter">
-          <div className="container-Filter">
-            <DropDown
-              sortedPost={sortDirection}
-              setSortDirection={setSortDirection}
-            />
+        <div className="titleSearchSort">
+          <div className="conatinerTSR">
+            <div className="ContainerSearchBarS">
+              <div className="searchBarInput">
+                <label id="searchLabel">Search:</label>
+                &nbsp;
+                <input
+                  type="text"
+                  name="search"
+                  placeholder="owner, title or description"
+                  onChange={(e) => setSearchInput(e.target.value)}
+                />
+              </div>
+            </div>
+            <h1 className="Post-tittle">Posts</h1>
+            <div className="Filter">
+              <div className="container-Filter">
+                <DropDown
+                  sortedPost={sortDirection}
+                  setSortDirection={setSortDirection}
+                />
+              </div>
+            </div>
           </div>
         </div>
-        <div>
-        
-        </div>
+
+        <div></div>
         <div className="PostBox">
           {posts
             .filter((post) => {
@@ -177,12 +172,9 @@ function Posts({ authenticated, token, userId }) {
                   <div className="card-title">
                     <h2 className="titlePost">{post.title}</h2>
                     <p className="soldBy">
-                      <span className="bold-text">
-                      Sold By:&nbsp;
-                    </span>
-                    {post.author.username}
+                      <span className="bold-text">Sold By:&nbsp;</span>
+                      {post.author.username}
                     </p>
-                    
                   </div>
                   <div className="card-price">
                     <span>Price: </span>
@@ -197,18 +189,28 @@ function Posts({ authenticated, token, userId }) {
                   </div>
                 </div>
                 <div>
-                  <p><span className="bold-text">Location:&nbsp;</span>{post.location}</p>
-                  <p> <span className="bold-text"> Will be deliver:&nbsp;</span>
-                     {post.willDeliver ? "Yes" : "No"}</p>
+                  {post.location !== "[On Request]" && post.location !== "" && (
+                    <p>
+                      <span className="bold-text">Location:&nbsp;</span>
+                      {post.location}
+                    </p>
+                  )}
+                  <p>
+                    {" "}
+                    <span className="bold-text"> Will be deliver:&nbsp;</span>
+                    {post.willDeliver ? "Yes" : "No"}
+                  </p>
                 </div>
                 <div className="Container-post-description">
                   <p className="postDescription">{post.description}</p>
                 </div>
                 <div className="buttons">
                   {authenticated && post.author._id === userIdLogin ? (
-                    
                     <div className="buttonsPost">
-                      <button className="deletePost" onClick={() => deletePost(post._id)}>
+                      <button
+                        className="deletePost"
+                        onClick={() => deletePost(post._id)}
+                      >
                         <svg
                           stroke="currentColor"
                           fill="currentColor"
@@ -225,10 +227,8 @@ function Posts({ authenticated, token, userId }) {
                         Delete
                       </button>
 
-
-                        <Link to = {`/edit-post/${post._id}`}
-                        className="editPost">
-                          <svg
+                      <Link to={`/edit-post/${post._id}`} className="editPost">
+                        <svg
                           stroke="currentColor"
                           fill="currentColor"
                           strokeWidth="0"
@@ -240,15 +240,13 @@ function Posts({ authenticated, token, userId }) {
                           <path d="M257.7 752c2 0 4-.2 6-.5L431.9 722c2-.4 3.9-1.3 5.3-2.8l423.9-423.9a9.96 9.96 0 0 0 0-14.1L694.9 114.9c-1.9-1.9-4.4-2.9-7.1-2.9s-5.2 1-7.1 2.9L256.8 538.8c-1.5 1.5-2.4 3.3-2.8 5.3l-29.5 168.2a33.5 33.5 0 0 0 9.4 29.8c6.6 6.4 14.9 9.9 23.8 9.9zm67.4-174.4L687.8 215l73.3 73.3-362.7 362.6-88.9 15.7 15.6-89zM880 836H144c-17.7 0-32 14.3-32 32v36c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-36c0-17.7-14.3-32-32-32z"></path>
                         </svg>{" "}
                         Edit
-                        </Link>
-                    
-                      
+                      </Link>
                     </div>
                   ) : (
                     <div className="buttons">
                       {authenticated ? (
                         <Link
-                          to={`/message/${post._id}`}
+                          to={`/message/${post._id}/xasdasdfrs`}
                           className="sendMessageButton loginButton"
                           id={"see-" + post._id}
                           name="see"

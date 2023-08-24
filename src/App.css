@@ -150,7 +150,7 @@ body {
 
 input[type="text"],
 input[type="password"],
-select {
+textarea {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -166,11 +166,18 @@ input[type="password"] {
   border-bottom-right-radius: 0px;
 }
 
-input::placeholder , textarea::placeholder{
+input::placeholder,
+textarea::placeholder {
   color: var(--black-Color);
   opacity: 1;
 }
 
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
 .loginButton {
   height: 50px;
   background-color: var(--brand-Name-Color);
@@ -265,6 +272,7 @@ input::placeholder , textarea::placeholder{
 .Post-tittle {
   margin-top: 5rem;
   text-align: center;
+  width: 33%;
 }
 
 .Content,
@@ -281,9 +289,17 @@ input::placeholder , textarea::placeholder{
   transition-duration: 0.4s;
 }
 
-.contentMessage, .editContainerForm {
+.contentMessage,
+.editContainerForm {
   position: absolute;
   top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.messageTitle {
+  position: absolute;
+  top: 26%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -293,19 +309,17 @@ input::placeholder , textarea::placeholder{
 }
 
 .ContainerSearchBar {
-  position: absolute;
+  width: 33.3%;
   display: flex;
-  justify-content: flex-end;
-  right: 50%;
-  transform: translate(50%);
-  top: 0px;
+  justify-content: flex-start;
 }
 
-.seacrBarInput {
-  width: 300px;
+.searchBarInput {
+  width: 100%;
   display: flex;
-  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 #searchLabel {
@@ -318,6 +332,23 @@ input::placeholder , textarea::placeholder{
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+}
+
+.titleSearchSort {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.conatinerTSR {
+  display: flex;
+  flex-direction: row;
+  max-width: 1000px;
+  align-items: flex-end;
+  min-width: 1000px;
+  justify-content: space-between;
 }
 
 .container-card-title {
@@ -389,10 +420,6 @@ input::placeholder , textarea::placeholder{
   align-items: center;
 }
 
-.buttonsPost:first-child > button {
-  margin-right: 20px;
-}
-
 .sendMessageButton,
 .editPost,
 .deletePost {
@@ -421,11 +448,17 @@ input::placeholder , textarea::placeholder{
   border-color: var(--edit-button-color);
 }
 
+.editContainerForm > h2 {
+  display: flex;
+  justify-content: center;
+}
+
 .deletePost {
   background-color: var(--danger-alert);
   border: 1px solid var(--danger-alert);
   transition-duration: 0.4s;
   color: var(--white-color);
+  margin-right: 10px;
 }
 
 .deletePost:hover {
@@ -442,9 +475,9 @@ input::placeholder , textarea::placeholder{
 }
 
 .Filter {
-  width: 100%;
   display: flex;
-  justify-content: center;
+  width: 33.3%;
+  margin-bottom: 20px;
 }
 
 .container-Filter {
@@ -504,14 +537,45 @@ input::placeholder , textarea::placeholder{
   margin-top: 1px;
 }
 
-.containerform{
+.containerform {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.inputstyle{
+.inputstyle {
   display: flex;
   flex-direction: column;
+}
+
+/* PROFILE */
+
+.messageCount {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.userMessage {
+  border-bottom: 1px solid red;
+  padding: 10px;
+}
+
+.containerMessage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.fromUser {
+  margin-bottom: 10px;
+}
+
+.messageDescription {
+  margin-bottom: 5px;
 }

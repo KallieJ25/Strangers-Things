@@ -12,7 +12,6 @@ import CreatePost from "./components/CreatePost";
 import "./App.css";
 import EditPost from "./components/EditPost";
 
-
 function App() {
   const COHORT_NAME = "2209-FTB-ET-WEB-FT";
   const BASE_URL = `https://strangers-things.herokuapp.com/api/${COHORT_NAME}`;
@@ -57,15 +56,11 @@ function App() {
           },
         });
         const result = await response.json();
-
         if (result.success) {
           setAuthenticated(true);
           setUserId(result.data._id);
           setuserName(result.data.username);
         } else {
-          if (isRegisterPage || isLoginPage) {
-            navigate("/login");
-          }
           setAuthenticated(false);
         }
 
@@ -105,17 +100,28 @@ function App() {
         ></Route>
         <Route
           path="/Profile"
-          element={<Profile authenticated={authenticated} />}
+          element={
+            <Profile
+              authenticated={authenticated}
+              userId={userId}
+              token={token}
+            />
+          }
         ></Route>
-        <Route path="/message/:id" element={<Message token={token} />}></Route>
-        <Route path="/createPost" element={<CreatePost authenticated={authenticated} />}> </Route>
-        <Route path="/edit-post/:postId" element={<EditPost token={token}/>}/>
+        <Route
+          path="/message/:id/:option?"
+          element={<Message authenticated={authenticated} token={token} />}
+        ></Route>
+        <Route
+          path="/createPost"
+          element={<CreatePost authenticated={authenticated} />}
+        >
+          {" "}
+        </Route>
+        <Route path="/edit-post/:postId" element={<EditPost token={token} />} />
       </Routes>
-      
-   </>
-   
+    </>
   );
-
 }
 
 export default App;

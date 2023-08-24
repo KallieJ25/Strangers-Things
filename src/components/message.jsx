@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-function Message({ token }) {
+
+function Message({ authenticated, token }) {
+  const navigate = useNavigate();
+  // If not authenticated, redirect to the login page
+  useEffect(() => {
+    if (authenticated !== true) {
+      navigate("/login");
+    }
+  }, [authenticated, navigate]);
   const COHORT_NAME = "2209-FTB-ET-WEB-FT";
   const BASE_URL = `https://strangers-things.herokuapp.com/api/${COHORT_NAME}`;
-  const { id } = useParams();
+  const { id, option } = useParams();
   const [post, setPost] = useState([]);
-    // const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [messageInfo, setMessageInfo] = useState("Post not found");
   const [message, setMessage] = useState("");
   const [messageApi, setMessageApi] = useState("");
   const [messageType, setMessageType] = useState("");
+
   const checkIcon = (
     <svg
       stroke="currentColor"
@@ -111,58 +120,84 @@ function Message({ token }) {
           </div>
         )}
       </div>
+
       {filteredPosts.length > 0 ? (
         filteredPosts.map((post) => (
-          <div className="contentMessage" key={post._id}>
-            <div className="container-card-title">
-              <div className="card-title">
-                <h2 className="titlePost">{post.title}</h2>
-                <span className="soldBy">
-                  {"Sold By: " + post.author.username}
-                </span>
-              </div>
-              <div className="card-price">
-                <span>Price: </span>
-                <span
-                  className={
-                    "postPrice bold-text " +
-                    (post.price == "free" ? "free-price" : "")
-                  }
-                >
-                  {post.price}
-                </span>
-              </div>
-            </div>
-            <div className="Container-post-description">
-              <p className="postDescription">{post.description}</p>
-            </div>
-            <div className="sendMessage">
-              <h3>Message User About This Post </h3>
-              <form onSubmit={handleSubmit(handleMessage)}>
-                <textarea
-                  {...register("message", {
-                    required: "This is required.",
-                    minLength: {
-                      value: 4,
-                      message: "Min Length is 4",
-                    },
-                  })}
-                  id=""
-                  cols="60"
-                  rows="10"
-                  onChange={(e) => setMessage(e.target.value)}
-                ></textarea>
-                <div className="buttons">
-                  {errors.message && (
-                    <p className="danger-color-text">
-                      {checkIcon}&nbsp;{errors.message?.message}
-                    </p>
+          <div key={post._id}>
+            <h2 className="messageTitle">
+              {option === "xasdasdfrs" ? "Send Message" : "Post Information"}
+            </h2>
+            <div className="contentMessage">
+              <div className="container-card-title">
+                <div className="card-title">
+                  <h2 className="titlePost">{post.title}</h2>
+                  {option === "xasdasdfrs" ? (
+                    <span className="soldBy">
+                      <span className="bold-text">Sold By:&nbsp;</span>
+                      {post.author.username}
+                    </span>
+                  ) : (
+                    ""
                   )}
-                  <button type="submit" className="loginButton">
-                    Send Message
-                  </button>
                 </div>
-              </form>
+                <div className="card-price">
+                  <span>Price: </span>
+                  <span
+                    className={
+                      "postPrice bold-text " +
+                      (post.price == "free" ? "free-price" : "")
+                    }
+                  >
+                    {post.price}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <p>
+                  <span className="bold-text">Location:&nbsp;</span>
+                  {post.location}
+                </p>
+                <p>
+                  {" "}
+                  <span className="bold-text"> Will be deliver:&nbsp;</span>
+                  {post.willDeliver ? "Yes" : "No"}
+                </p>
+              </div>
+              <div className="Container-post-description">
+                <p className="postDescription">{post.description}</p>
+              </div>
+              {option === "xasdasdfrs" ? (
+                <div className="sendMessage">
+                  <h3>Message User About This Post </h3>
+                  <form onSubmit={handleSubmit(handleMessage)}>
+                    <textarea
+                      {...register("message", {
+                        required: "This is required.",
+                        minLength: {
+                          value: 4,
+                          message: "Min Length is 4",
+                        },
+                      })}
+                      id=""
+                      cols="60"
+                      rows="10"
+                      onChange={(e) => setMessage(e.target.value)}
+                    ></textarea>
+                    <div className="buttons">
+                      {errors.message && (
+                        <p className="danger-color-text">
+                          {checkIcon}&nbsp;{errors.message?.message}
+                        </p>
+                      )}
+                      <button type="submit" className="loginButton">
+                        Send Message
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         ))
